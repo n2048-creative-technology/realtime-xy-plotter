@@ -6,3 +6,4 @@ Click to switch pen up and down.
 
 Move mouse and plotter will follow. 
 
+Press H to return to home position;
