@@ -112,11 +112,12 @@ void mouseClicked() {
   if (!penDown) {
     machine.write("$1=255\n");
     machine.write("G0 z10\n");
+    penDown = true;
   } else {
     machine.write("G0 z0\n");
     machine.write("$1=0\n");
+    penDown = false;
   }
-  penDown = !penDown;
 }
 
 void mouseMoved() {
@@ -125,16 +126,11 @@ void mouseMoved() {
 
 void goToTarget() {
   if (!homed) return;
-
   isMoving = true;
-  //machine.write("$1=255\n");
-  //machine.write("G0 z10\n");
   machine.write("$J=G90 X"+str(mTarget.x) + " Y"+ str(mTarget.y)+ " F" + str(parseInt(feedSpeed)) +"\n");
 }
 
 void homing() {
-  //machine.write("G0 z0\n");
-  //machine.write("$1=0\n");
   homed = false; // <-- important
   prevPos = new PVector(width, 0);
   nextPos = new PVector(width, 0);
@@ -147,6 +143,17 @@ void keyPressed() {
   if (key == 'h') {
     homing();
   }
+  if (key == ' ') {
+    if (!penDown) {
+      machine.write("$1=255\n");
+      machine.write("G0 z10\n");
+      penDown = true;
+    } else {
+      machine.write("G0 z0\n");
+      machine.write("$1=0\n");
+      penDown = false;
+    }
+  } 
   if (!homed) return;
 
   if (keyCode == DOWN) {
